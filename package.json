@@ -1,0 +1,37 @@
+{
+  "name": "bend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@leonardocabeza/the-movie-db": "^4.0.1",
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "debug": "^4.1.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "http-errors": "^1.7.3",
+    "jsonwebtoken": "^8.5.1",
+    "km-moviedb": "^0.2.14",
+    "moment": "^2.24.0",
+    "moviedb": "^0.2.10",
+    "moviedb-promise": "^1.5.0",
+    "node": "^13.12.0",
+    "node-mdbapi": "^1.0.2",
+    "node-themoviedb": "^0.1.4",
+    "pg": "^8.0.2",
+    "pg-hstore": "^2.3.3",
+    "request": "^2.88.2",
+    "sequelize": "^5.21.6",
+    "sequelize-cli": "^5.5.1",
+    "tmdb": "^2.5.1",
+    "tmdbv3": "^0.1.2"
+  }
+}
