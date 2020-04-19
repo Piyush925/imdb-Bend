@@ -6,7 +6,11 @@ async function getwatchList(req,res,next)
         var token=req.headers['x-access-token'];
         var decoded=jwt.verify(token,'nodeauthsecret') 
           const watchlist=await models.watchList.findAll({
-              where:{userId:decoded.userId}
+              where:{userId:decoded.userId},
+              include:[{
+                model:models.Movies,
+                required:true
+            }]
           })           
     res.status(200).json({
         message:"success",

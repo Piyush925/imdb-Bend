@@ -1,4 +1,5 @@
 'use strict';
+
 module.exports = (sequelize, DataTypes) => {
   const favList = sequelize.define('favList', {
     userId: DataTypes.INTEGER,
@@ -6,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   favList.associate = function(models) {
     // associations can be defined here
-  };
+    favList.hasMany(models.Movies,{foreignKey:'id',sourceKey: 'movieId'})
+  }
   return favList;
 };

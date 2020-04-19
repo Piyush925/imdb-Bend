@@ -11,12 +11,13 @@ async function login(req, res, next) {
         user.comparePassword(req.body.password, (err, isMatch) => {
             if (isMatch && !err) {
                 
-                if(user.role===req.body.role)
+                if(user.role.toUpperCase()===req.body.role.toUpperCase())
                { var token = jwt.sign({ userId: user.id }, 'nodeauthsecret', { expiresIn: 86400 * 30 });
                
                 res.status(200).json({
                     message:"login successfull",
-                    token
+                    token,
+                    role:req.body.role
                 })
             }
             else{

@@ -8,7 +8,7 @@ async function addWatchList(req,res,next)
          var decoded=jwt.verify(token,'nodeauthsecret') 
           const watchlist=await models.watchList.create({
               userId:decoded.userId,
-              movieId:req.body.movieid
+              movieId:req.body.movieId
           })           
     res.status(200).json({
         message:"success",

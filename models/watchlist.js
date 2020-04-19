@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   watchList.associate = function(models) {
     // associations can be defined here
+    watchList.hasMany(models.Movies,{foreignKey:'id',sourceKey: 'movieId'})
   };
   return watchList;
 };

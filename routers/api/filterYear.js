@@ -1,16 +1,8 @@
 const models=require('../../models');
-
+const queryString=require('query-string')
 async function getByYear(req,res,next)
 {
-    try{let obj={},role=[],rolename=[];
-        if(req.query.rating)
-        {
-           obj={...obj,rating:req.query.rating}
-        }
-        if(req.query.year)
-        {
-           obj={...obj,releaseYear:req.query.year}
-        }
+     try{role=[],rolename=[];
         if(req.query.producer)
         {
           role.push("Producer")
@@ -37,13 +29,10 @@ async function getByYear(req,res,next)
         }
         console.log(role,rolename)
       
-        const user = await models.Movies.findAll({
-            
-            where:obj,
-          
+        const movie = await models.Movies.findAll({         
             include: [{
                 model: models.MoviePersons,
-                 where:{name:rolename},
+                where:{name:rolename},
                 required: true,
                include:[{
                    model:models.Roles,
@@ -55,7 +44,8 @@ async function getByYear(req,res,next)
     res.status(200).json({
 
         message:"success",
-        user
+        movie,
+        params:req.query
     })
 
    
@@ -65,7 +55,8 @@ async function getByYear(req,res,next)
     catch(err){
         res.status(500).json({
             message:"error",
-            err
+            err,
+             params:req.query
         })
         next(err)
     }
