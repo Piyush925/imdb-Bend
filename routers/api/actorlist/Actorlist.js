@@ -1,10 +1,10 @@
-const models=require('../../models');
+const models=require('../../../models');
 
 async function actorList(req,res,next)
 {
     try{
         const actors = await models.MoviePersons.findAll({
-            where:{roleId:"2"},
+            where:{roleId:"1"},
             group:["name","age"],
             attributes:["name","age"]
             

@@ -1,6 +1,5 @@
-const models=require('../../models');
-const queryString=require('query-string')
-async function getByYear(req,res,next)
+const models=require('../../../models');
+async function getfilter(req,res,next)
 {
      try{role=[],rolename=[];
         if(req.query.producer)
@@ -62,4 +61,4 @@ async function getByYear(req,res,next)
     }
 
 }
-module.exports={getByYear};
+module.exports={getfilter};

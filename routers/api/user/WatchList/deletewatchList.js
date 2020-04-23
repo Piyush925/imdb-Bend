@@ -7,7 +7,7 @@ async function deleteWatchList(req,res,next)
         var decoded=jwt.verify(token,'nodeauthsecret')      
           const delwatchlist=await models.watchList.destroy({
               where:{userId:decoded.userId,
-            movieId:req.body.movieid}
+            movieId:req.body.movieId}
           })           
     res.status(200).json({
         message:"success",

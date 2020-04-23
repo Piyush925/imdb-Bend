@@ -5,7 +5,7 @@ async function deleteFavList(req,res,next)
     try{
         var token=req.headers['x-access-token'];
         var decoded=jwt.verify(token,'nodeauthsecret')  
-          const delfavlist=await models.favlist.destroy({
+          const delfavlist=await models.favList.destroy({
               where:{userId:decoded.userId,
             movieId:req.body.movieId}
           })           
