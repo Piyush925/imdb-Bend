@@ -9,7 +9,7 @@ async function createUser(req, res, next) {
         })
       
     } catch (error) {
-        res.status(404).json({ error })
+        res.status(505).json({ error })
     }
 }
 
