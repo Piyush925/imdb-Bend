@@ -40,7 +40,7 @@ async function login(req, res, next) {
         }) 
     }
     } catch (error) {
-        res.status(401).json({ error })
+        res.status(500).json({ error })
     }
 }
 
