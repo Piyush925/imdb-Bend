@@ -1,25 +1,27 @@
-const models=require('../../../models');
+const models = require('../../../models');
+const Logger = require('../../../services/logger')
+const logger = new Logger('review')
+async function review(req, res, next) {
+    try {
+        const reviewUpdated = await models.Movies.update({
+            review: req.body.review
+        },
+            { returning: true, where: { id: req.body.movieId } })
+        logger.info("success")
+        res.status(200).json({
+            message: "success",
+            reviewUpdated
+        })
 
-async function review(req,res,next)
-{
-    try{
-        const reviewupdated = await models.Movies.update({
-            review:req.body.review},
-           {returning:true, where:{id:req.body.movieId}})
-    res.status(200).json({
-
-        message:"success",
-        reviewupdated
-    })
-
-}
-    catch(err){
+    }
+    catch (err) {
+        logger.error("error", { err })
         res.status(500).json({
-            message:"error",
+            message: "error",
             err
         })
         next(err)
     }
 
 }
-module.exports={review};
+module.exports = { review };

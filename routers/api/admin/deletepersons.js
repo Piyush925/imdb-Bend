@@ -1,30 +1,28 @@
-const models=require('../../../models');
-async function deletePersons(req,res,next)
-{
-     try{      
-        const persons = await models.MoviePersons.destroy({         
-            where:{
-                roleId:req.body.roleId,
-                name:req.body.name
+const models = require('../../../models');
+const Logger = require('../../../services/logger')
+const logger = new Logger('deleteperson')
+async function deletePersons(req, res, next) {
+    try {
+        const persons = await models.MoviePersons.destroy({
+            where: {
+                roleId: req.body.roleId,
+                name: req.body.name
             }
         })
-    
-
-    res.status(200).json({
-
-        message:"success",
-        persons
-       
-    })
+        logger.info("Deleted Persons")
+        res.status(200).json({
+            message: "success",
+            persons
+        })
     }
-    catch(err){
+    catch (err) {
+        logger.error("error", { err })
         res.status(500).json({
-            message:"error",
+            message: "error",
             err,
-           
         })
         next(err)
     }
 
 }
-module.exports={deletePersons};
+module.exports = { deletePersons };
