@@ -1,9 +1,19 @@
 const models=require('../../../models');
+const _ =require('lodash');
 require('dotenv').config();
 const MovieDb = require('moviedb-promise')
-const moviedb = new MovieDb(process.env.TMDB_API_KEY)
+const moviedb = new MovieDb("e5757d8592ad13ee79cd78f9d81e8fae")
 const Logger = require('../../../services/logger')
 const logger = new Logger('addmovie')
+/** @description Method for adding movies and also fetching images and rating using tmdb api
+ * @async
+ * @method
+ * @param {object} req - Request object contains the movie details --attributes like name,actorNameArray,actressNameArray,Director,Producer,RelaseYear
+ * @param {object} res - Reponse object with details of movies inserted into databases.
+ * @param {function next(error) {
+}} next - calls the error handling middleware.
+*/
+
 async function addMovies(req,res,next)
 {
     try{
@@ -11,8 +21,8 @@ async function addMovies(req,res,next)
           const movie=await models.Movies.create({
              name:req.body.name,
              releaseYear:req.body.releaseYear,
-             rating:parseInt(movieImgObj.results[0].vote_average,10),
-             imgURL:"https://image.tmdb.org/t/p/w185"+movieImgObj.results[0].poster_path
+             rating:parseInt(_.first(movieImgObj.results).vote_average,10),
+             imgURL:"https://image.tmdb.org/t/p/w185"+_.first(movieImgObj.results).poster_path
 
          })
           
@@ -33,9 +43,9 @@ async function addMovies(req,res,next)
         name:item
     }))
 })
-    const personDetails=await models.MoviePersons.bulkCreate(Actor);
-    const personActress=await models.MoviePersons.bulkCreate(Actress);
-    const dirpro=await models.MoviePersons.bulkCreate([
+    const personDetails=await models.MoviePerson.bulkCreate(Actor);
+    const personActress=await models.MoviePerson.bulkCreate(Actress);
+    const dirpro=await models.MoviePerson.bulkCreate([
         {
             movieId:movieId,
             roleId:3,
