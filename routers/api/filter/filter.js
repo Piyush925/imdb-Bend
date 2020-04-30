@@ -1,64 +1,63 @@
-const models=require('../../../models');
-async function getfilter(req,res,next)
-{
-     try{role=[],rolename=[];
-        if(req.query.producer)
-        {
-          role.push("Producer")
-          
-         rolename.push(JSON.parse(req.query.producer))
-         }
-        if(req.query.director)
-        {
+const models = require('../../../models');
+const Logger = require('../../../services/logger')
+const logger = new Logger('filter')
+/** @description Method for fetch movie by filter
+ * @async
+ * @method
+ * @param {object} req - Request object contains the filter attributes on which basis we have to fetch movies --attributes producer,director,actors,actress
+ * @param {object} res - Reponse object with details of movies.
+ * @param {function next(error) {
+}} next - calls the error handling middleware.
+*/
+async function getFilter(req, res, next) {
+    try {
+    role = [], roleName = [];
+        if (req.query.producer) {
+            role.push("Producer")
+
+            roleName.push(JSON.parse(req.query.producer))
+        }
+        if (req.query.director) {
             role.push("Director")
-            rolename.push(JSON.parse(req.query.director))
+            roleName.push(JSON.parse(req.query.director))
         }
-        if(req.query.actress)
-        {
-          role.push("Actress")
-         
-         rolename=rolename.concat(JSON.parse(req.query.actress))
+        if (req.query.actress) {
+            role.push("Actress")
+
+            roleName = roleName.concat(JSON.parse(req.query.actress))
         }
-        if(req.query.actor)
-        {
+        if (req.query.actor) {
             role.push("Actor")
-            
-            rolename=rolename.concat(JSON.parse(req.query.actor))
-         
+
+            roleName = roleName.concat(JSON.parse(req.query.actor))
+
         }
-        console.log(role,rolename)
-      
-        const movie = await models.Movies.findAll({         
+        const movie = await models.Movies.findAll({
             include: [{
                 model: models.MoviePersons,
-                where:{name:rolename},
+                where: { name: roleName },
                 required: true,
-               include:[{
-                   model:models.Roles,
-                    where:{role:role},
-                   required:true
-               }]
+                include: [{
+                    model: models.Roles,
+                    where: { role: role },
+                    required: true
+                }]
             }],
         })
-    res.status(200).json({
-
-        message:"success",
-        movie,
-        params:req.query
-    })
-
-   
-
-
+        logger.info("filter success")
+        res.status(200).json({
+            message: "success",
+            movie
+        })
     }
-    catch(err){
+    catch (err) {
+        logger.error("error", { err })
         res.status(500).json({
-            message:"error",
+            message: "error",
             err,
-             params:req.query
         })
         next(err)
     }
 
 }
-module.exports={getfilter};
+module.exports = { getFilter };
