@@ -45,7 +45,9 @@ async function login(req, res, next) {
         }) 
     }
     } catch (error) {
+
         logger.error("Error",{error})
+
         res.status(500).json({ error })
     }
 }

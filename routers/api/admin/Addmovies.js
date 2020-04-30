@@ -1,7 +1,7 @@
 const models=require('../../../models');
 require('dotenv').config();
 const MovieDb = require('moviedb-promise')
-const moviedb = new MovieDb("e5757d8592ad13ee79cd78f9d81e8fae")
+const moviedb = new MovieDb(process.env.TMDB_API_KEY)
 const Logger = require('../../../services/logger')
 const logger = new Logger('addmovie')
 async function addMovies(req,res,next)
