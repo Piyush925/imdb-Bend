@@ -1,7 +1,7 @@
 'use strict';
 const MovieDb = require('moviedb-promise')
 const moment=require('moment');
-const moviedb = new MovieDb("e5757d8592ad13ee79cd78f9d81e8fae")
+const moviedb = new MovieDb(process.env.TMDB_API_KEY)
 const models=require('../models')
 module.exports = {
   up:async function(queryInterface, Sequelize) {
