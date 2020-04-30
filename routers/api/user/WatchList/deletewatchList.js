@@ -2,6 +2,14 @@ const models = require('../../../../models');
 const jwt = require('jsonwebtoken')
 const Logger = require('../../../../services/logger')
 const logger = new Logger('deletewatchlist')
+/** @description Method for delete movies from user Wacthlist
+ * @async
+ * @method
+ * @param {object} req - Request object contains movieId of movies which is to be deleted from Watchlist 
+ * @param {object} res - Reponse object contains deleted row count.
+ * @param {function next(error) {
+}} next - calls the error handling middleware.
+*/
 async function deleteWatchList(req, res, next) {
     try {
         var token = req.headers['x-access-token'];

@@ -2,6 +2,14 @@ const models=require('../../../models')
 const jwt = require('jsonwebtoken')
 const Logger = require('../../../services/logger')
 const logger = new Logger('login')
+/** @description Method for Login User
+ * @async
+ * @method
+ * @param {object} req - Request object contains User login details --attributes email,password,role 
+ * @param {object} res - Reponse object contains user details inserted in database.
+ * @param {function next(error) {
+}} next - calls the error handling middleware.
+*/
 async function login(req, res, next) {
     try {
         const user= await models.User.findOne({
@@ -49,6 +57,7 @@ async function login(req, res, next) {
         logger.error("Error",{error})
 
         res.status(500).json({ error })
+        next(err)
     }
 }
 

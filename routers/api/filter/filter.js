@@ -1,6 +1,14 @@
 const models = require('../../../models');
 const Logger = require('../../../services/logger')
 const logger = new Logger('filter')
+/** @description Method for fetch movie by filter
+ * @async
+ * @method
+ * @param {object} req - Request object contains the filter attributes on which basis we have to fetch movies --attributes producer,director,actors,actress
+ * @param {object} res - Reponse object with details of movies.
+ * @param {function next(error) {
+}} next - calls the error handling middleware.
+*/
 async function getFilter(req, res, next) {
     try {
     role = [], roleName = [];
