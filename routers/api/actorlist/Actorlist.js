@@ -1,7 +1,14 @@
 const models = require('../../../models');
 const Logger = require('../../../services/logger')
 const logger = new Logger('Actorlist')
-async function actorList(req, res, next) {
+/** @description Fetching the actor list
+ * @async
+ * @method
+ * @param {object} res - Reponse object with details of actors.
+ * @param {function next(error) {
+}} next - calls the error handling middleware.
+*/
+async function actorList(res, next) {
     try {
         const actors = await models.MoviePersons.findAll({
             where: { roleId: "1" },

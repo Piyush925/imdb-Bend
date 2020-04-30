@@ -1,6 +1,15 @@
 const models = require('../../../models');
 const Logger = require('../../../services/logger')
 const logger = new Logger('addperson')
+/** @description Method for adding Persons of movie
+ * @async
+ * @method
+ * @param {object} req - Request object contains the person details --attributes like roleId,name,age
+ * @param {object} res - Reponse object with details of persons added in database.
+ * @param {function next(error) {
+}} next - calls the error handling middleware.
+*/
+
 async function addPersons(req, res, next) {
     try {
         const persons = await models.MoviePersons.findOrCreate({

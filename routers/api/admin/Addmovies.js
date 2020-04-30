@@ -4,6 +4,15 @@ const MovieDb = require('moviedb-promise')
 const moviedb = new MovieDb("e5757d8592ad13ee79cd78f9d81e8fae")
 const Logger = require('../../../services/logger')
 const logger = new Logger('addmovie')
+/** @description Method for adding movies and also fetching images and rating using tmdb api
+ * @async
+ * @method
+ * @param {object} req - Request object contains the movie details --attributes like name,actorNameArray,actressNameArray,Director,Producer,RelaseYear
+ * @param {object} res - Reponse object with details of movies inserted into databases.
+ * @param {function next(error) {
+}} next - calls the error handling middleware.
+*/
+
 async function addMovies(req,res,next)
 {
     try{

@@ -1,6 +1,14 @@
 const models = require('../../../models');
 const Logger = require('../../../services/logger')
 const logger = new Logger('getparticulermovie')
+/** @description Method for fetching details of particular movie 
+ * @async
+ * @method
+ * @param {object} req - Request object contains the movie id 
+ * @param {object} res - Reponse object with details of movies.
+ * @param {function next(error) {
+}} next - calls the error handling middleware.
+*/
 async function getPaticularMovie(req, res, next) {
     try {
         const movie = await models.Movies.findAll({
