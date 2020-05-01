@@ -1,6 +1,7 @@
 const models = require('../../../models')
 const Logger = require('../../../services/logger')
 const logger = new Logger('signup')
+const { success, failure } = require('../response')
 /** @description Method for creating new User
  * @async
  * @method
@@ -13,13 +14,11 @@ async function createUser(req, res, next) {
     try {
         const user = await models.User.create(req.body)
         logger.info("success")
-        res.status(200).json({
-            user
-        })
+        success(res, 200, user)
 
-    } catch (error) {
+    } catch (err) {
         logger.error("error", { err })
-        res.status(500).json({ error })
+        failure(res, 500, err)
         next(err)
     }
 }

@@ -1,6 +1,7 @@
 const models = require('../../../models');
 const Logger = require('../../../services/logger')
 const logger = new Logger('filter')
+const { success, failure } = require('../response')
 /** @description Method for fetch movie by filter
  * @async
  * @method
@@ -11,7 +12,7 @@ const logger = new Logger('filter')
 */
 async function getFilter(req, res, next) {
     try {
-    role = [], roleName = [];
+        role = [], roleName = [];
         if (req.query.producer) {
             role.push("Producer")
 
@@ -34,7 +35,7 @@ async function getFilter(req, res, next) {
         }
         const movie = await models.Movies.findAll({
             include: [{
-                model: models.MoviePersons,
+                model: models.MoviePerson,
                 where: { name: roleName },
                 required: true,
                 include: [{
@@ -45,17 +46,11 @@ async function getFilter(req, res, next) {
             }],
         })
         logger.info("filter success")
-        res.status(200).json({
-            message: "success",
-            movie
-        })
+        success(res, 200, movie)
     }
     catch (err) {
         logger.error("error", { err })
-        res.status(500).json({
-            message: "error",
-            err,
-        })
+        failure(res, 500, err)
         next(err)
     }
 

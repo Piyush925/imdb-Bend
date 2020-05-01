@@ -1,7 +1,8 @@
 const models = require('../../../../models');
 const jwt = require('jsonwebtoken')
 const Logger = require('../../../../services/logger')
-const logger = new Logger('deletewatchlist')
+const logger = new Logger('deleteWatchlist')
+const { success, failure } = require('../../response')
 /** @description Method for delete movies from user Wacthlist
  * @async
  * @method
@@ -21,17 +22,11 @@ async function deleteWatchList(req, res, next) {
             }
         })
         logger.info("success")
-        res.status(200).json({
-            message: "success",
-            delWatchlist
-        })
+        success(res, 200, delWatchlist)
     }
     catch (err) {
         logger.error("error", { err })
-        res.status(500).json({
-            message: "error",
-            err
-        })
+        failure(res, 500, err)
         next(err)
     }
 

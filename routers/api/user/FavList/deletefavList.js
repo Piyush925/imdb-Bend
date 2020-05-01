@@ -2,6 +2,7 @@ const models = require('../../../../models');
 const jwt = require('jsonwebtoken');
 const Logger = require('../../../../services/logger')
 const logger = new Logger('deletefavlist')
+const { success, failure } = require('../../response')
 /** @description Method for delete movies from user Favlist
  * @async
  * @method
@@ -21,17 +22,11 @@ async function deleteFavList(req, res, next) {
             }
         })
         logger.info("success")
-        res.status(200).json({
-            message: "success",
-            delFavlist
-        })
+        success(res, 200, delFavlist)
     }
     catch (err) {
         logger.error("error", { err })
-        res.status(500).json({
-            message: "error",
-            err
-        })
+        failure(res, 500, err)
         next(err)
     }
 }

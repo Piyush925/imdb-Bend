@@ -2,6 +2,7 @@ const models = require('../../../../models');
 const jwt = require('jsonwebtoken')
 const Logger = require('../../../../services/logger')
 const logger = new Logger('getwatchlist')
+const { success, failure } = require('../../response')
 /** @description Method for fecth movies from user Wacthlist
  * @async
  * @method
@@ -10,7 +11,7 @@ const logger = new Logger('getwatchlist')
  * @param {function next(error) {
 }} next - calls the error handling middleware.
 */
-async function getwatchList(req, res, next) {
+async function getWatchList(req, res, next) {
     try {
         var token = req.headers['x-access-token'];
         var decoded = jwt.verify(token, 'nodeauthsecret')
@@ -22,21 +23,15 @@ async function getwatchList(req, res, next) {
             }]
         })
         logger.info("success")
-        res.status(200).json({
-            message: "success",
-            watchlist
-        })
+        success(res, 200, watchlist)
     }
     catch (err) {
         logger.error("error", { err })
-        res.status(500).json({
-            message: "error",
-            err
-        })
+        failure(res, 500, err)
         next(err)
     }
 
 }
 
 
-module.exports = { getwatchList };
+module.exports = { getWatchList };

@@ -1,6 +1,7 @@
 const models = require('../../../models');
 const Logger = require('../../../services/logger')
 const logger = new Logger('Actorlist')
+const { success, failure } = require('../response')
 /** @description Fetching the actor list
  * @async
  * @method
@@ -8,26 +9,24 @@ const logger = new Logger('Actorlist')
  * @param {function next(error) {
 }} next - calls the error handling middleware.
 */
-async function actorList(res, next) {
+async function actorList(req, res, next) {
     try {
-        const actors = await models.MoviePersons.findAll({
+        const actors = await models.MoviePerson.findAll({
             where: { roleId: "1" },
             group: ["name", "age"],
             attributes: ["name", "age"]
         })
         logger.info("sucessful get actorlist")
-        res.status(200).json({
-            message: "success",
-            actors
-        })
+        success(res, 200, actors)
 
     }
     catch (err) {
         logger.error("error", { err })
-        res.status(500).json({
-            message: "error",
-            err
-        })
+        failure(res, 500, err)
+        // res.status(500).json({
+        //     message: "error",
+        //     err
+        // })
         next(err)
     }
 
