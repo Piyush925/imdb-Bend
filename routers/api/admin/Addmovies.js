@@ -14,7 +14,6 @@ const logger = new Logger('addmovie')
  * @param {function next(error) {
 }} next - calls the error handling middleware.
 */
-
 async function addMovies(req, res, next) {
     try {
         const actorId = await models.Roles.findOne({
@@ -39,7 +38,6 @@ async function addMovies(req, res, next) {
             releaseYear: req.body.releaseYear,
             rating: parseInt(_.first(movieImgObj.results).vote_average, 10),
             imgURL: "https://image.tmdb.org/t/p/w185" + _.first(movieImgObj.results).poster_path
-
         })
 
         let movieId = movie.dataValues.id;
