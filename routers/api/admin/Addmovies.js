@@ -3,7 +3,7 @@ const _ = require('lodash');
 const { success, failure } = require('../response')
 require('dotenv').config();
 const MovieDb = require('moviedb-promise')
-const moviedb = new MovieDb("e5757d8592ad13ee79cd78f9d81e8fae")
+const moviedb = new MovieDb(process.env.TMDB_API_KEY)
 const Logger = require('../../../services/logger')
 const logger = new Logger('addmovie')
 /** @description Method for adding movies and also fetching images and rating using tmdb api
@@ -14,7 +14,6 @@ const logger = new Logger('addmovie')
  * @param {function next(error) {
 }} next - calls the error handling middleware.
 */
-
 async function addMovies(req, res, next) {
     try {
         const movieImgObj = await moviedb.searchMovie({ query: req.body.name })
@@ -23,7 +22,6 @@ async function addMovies(req, res, next) {
             releaseYear: req.body.releaseYear,
             rating: parseInt(_.first(movieImgObj.results).vote_average, 10),
             imgURL: "https://image.tmdb.org/t/p/w185" + _.first(movieImgObj.results).poster_path
-
         })
 
         let movieId = movie.dataValues.id;
@@ -67,6 +65,4 @@ async function addMovies(req, res, next) {
     }
 
 }
-
-
 module.exports = { addMovies };
