@@ -1,6 +1,7 @@
 const models = require('../../../models');
 const Logger = require('../../../services/logger')
 const logger = new Logger('deletemovie')
+const { success, failure } = require('../response')
 /** @description Method for delete movies and also delete cast and crew of movies
  * @async
  * @method
@@ -15,22 +16,15 @@ async function deleteMovies(req, res, next) {
             where: { id: req.body.movieId }
         })
 
-        const deletePerson = await models.MoviePersons.destroy({
+        const deletePerson = await models.MoviePerson.destroy({
             where: { movieId: req.body.movieId }
         })
         logger.info("deleted movie")
-        res.status(200).json({
-            message: "success",
-            movie, deletePerson
-        })
-
+        success(res, 200, { movie, deletePerson })
     }
     catch (err) {
         logger.error("error", { err })
-        res.status(500).json({
-            message: "error",
-            err
-        })
+        failure(res, 500, err)
         next(err)
     }
 

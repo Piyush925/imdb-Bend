@@ -1,6 +1,7 @@
 const models = require('../../../models');
 const Logger = require('../../../services/logger')
 const logger = new Logger('list')
+const { success, failure } = require('../response')
 /** @description Method for fecthing rating and releaseYear of all movies
  * @async
  * @method
@@ -16,18 +17,12 @@ async function list(req, res, next) {
             attributes: [req.params.options]
         })
         logger.info("success")
-        res.status(200).json({
-            message: "success",
-            option
-        })
+        success(res, 200, option)
 
     }
     catch (err) {
         logger.error("error", { err })
-        res.status(500).json({
-            message: "error",
-            err
-        })
+        failure(res, 500, err)
         next(err)
     }
 

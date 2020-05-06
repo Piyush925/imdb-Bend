@@ -1,6 +1,7 @@
 const models = require('../../../models');
 const Logger = require('../../../services/logger')
 const logger = new Logger('review')
+const { success, failure } = require('../response')
 /** @description Method for inserting or updating review of movies
  * @async
  * @method
@@ -16,18 +17,12 @@ async function review(req, res, next) {
         },
             { returning: true, where: { id: req.body.movieId } })
         logger.info("success")
-        res.status(200).json({
-            message: "success",
-            reviewUpdated
-        })
+        success(res, 200, reviewUpdated)
 
     }
     catch (err) {
         logger.error("error", { err })
-        res.status(500).json({
-            message: "error",
-            err
-        })
+        failure(res, 500, err)
         next(err)
     }
 
