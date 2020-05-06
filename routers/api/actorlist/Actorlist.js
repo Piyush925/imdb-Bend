@@ -11,8 +11,12 @@ const { success, failure } = require('../response')
 */
 async function actorList(req, res, next) {
     try {
+        const id = await models.Roles.findOne({
+            where: { role: "Actor" },
+            attributes: ['id']
+        })
         const actors = await models.MoviePerson.findAll({
-            where: { roleId: "1" },
+            where: { roleId: id.id },
             group: ["name", "age"],
             attributes: ["name", "age"]
         })
@@ -23,10 +27,6 @@ async function actorList(req, res, next) {
     catch (err) {
         logger.error("error", { err })
         failure(res, 500, err)
-        // res.status(500).json({
-        //     message: "error",
-        //     err
-        // })
         next(err)
     }
 
