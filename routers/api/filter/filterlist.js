@@ -1,6 +1,7 @@
 const models = require('../../../models');
 const Logger = require('../../../services/logger')
 const logger = new Logger('filterlist')
+const { success, failure } = require('../response')
 /** @description Method for fecth persons list 
  * @async
  * @method
@@ -11,23 +12,17 @@ const logger = new Logger('filterlist')
 */
 async function filterList(req, res, next) {
     try {
-        const persons = await models.MoviePersons.findAll({
+        const persons = await models.MoviePerson.findAll({
             where: { roleId: req.params.id },
             group: ["name"],
             attributes: ["name"]
         })
         logger.info("success")
-        res.status(200).json({
-            message: "success",
-            persons
-        })
+        success(res, 200, persons)
     }
     catch (err) {
         logger.error("error", { err })
-        res.status(500).json({
-            message: "error",
-            err
-        })
+        failure(res, 500, err)
         next(err)
     }
 

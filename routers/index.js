@@ -11,9 +11,9 @@ const { actorList } = require('./api/actorlist/Actorlist')
 const { addFavList } = require('./api/user/FavList/addfavlist');
 const { deleteFavList } = require('./api/user/FavList/deletefavList');
 const { getFavList } = require('./api/user/FavList/getfavList')
-const { addWatchList } = require('./api/user/WatchList/addwatchlist')
-const { deleteWatchList } = require('./api/user/WatchList/deletewatchList')
-const { getwatchList } = require('./api/user/WatchList/getwatchList');
+const { addWatchList } = require('./api/user/watchList/addWatchlist')
+const { deleteWatchList } = require('./api/user/watchList/deleteWatchList')
+const { getWatchList } = require('./api/user/watchList/getWatchList');
 const { getPaticularMovie } = require('./api/movie/get-paticular-movie-details');
 const { filterList } = require('./api/filter/filterlist')
 const { list } = require('./api/movie/list')
@@ -36,7 +36,7 @@ router.put('/rating', middleware(schemas.rating, 'body'), rating);
 router.put('/review', middleware(schemas.review, 'body'), review);
 router.post('/favlist/add', middleware(schemas.addFavlist, 'body'), addFavList);
 router.post('/addperson', middleware(schemas.addperson, 'body'), addPersons)
-router.get('/watchlist/get', getwatchList);
+router.get('/watchlist/get', getWatchList);
 router.get('/favlist/get', getFavList);
 router.delete('/watchlist/delete', middleware(schemas.deleteWatchlist, 'body'), deleteWatchList)
 router.delete('/favlist/delete', middleware(schemas.deleteFavlist, 'body'), deleteFavList)
